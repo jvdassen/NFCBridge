@@ -5,4 +5,11 @@
     <string name="amount">Amount</string>
     <string name="nfc_received_label">An NDEF message was read:</string>
     <string name="NFC_message" />
+    <string name="bazoaddress">Bazoaddress</string>
+    <string name="openInWalletBtn">Open in Wallet</string>
+    <string name="pos_id_label">POS ID</string>
+    <string name="pos_id_hint">133</string>
+    <string name="bazoaddress_hint">34VBN52BACO7H3IND</string>
+    <string name="amount_hint">3.5</string>
+    <string name="nfc_icon_description">NFC</string>
 </resources>
