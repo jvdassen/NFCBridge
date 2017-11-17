@@ -10,6 +10,7 @@
     import android.support.v7.app.AppCompatActivity;
     import android.os.Bundle;
     import android.widget.EditText;
+    import android.widget.TextView;
 
     import org.json.JSONArray;
     import org.json.JSONException;
@@ -21,7 +22,7 @@
         Intent NFCintent;
         Uri uri;
         String dataRepresenation;
-        EditText NFCMessageDisplay;
+        TextView NFCMessageDisplay;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,9 @@
             NFCintent = getIntent();
 
 
-            /*NFCMessageDisplay = (EditText) findViewById(R.id.nfc_message_display);
-            NFCMessageDisplay.setText(dataRepresenation);
-            */
+            NFCMessageDisplay = (TextView) findViewById(R.id.nfc_message_display);
+
+
 
             if (getIntent() != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
                 Parcelable[] rawMessages =
@@ -41,8 +42,9 @@
                     NdefMessage[] messages = new NdefMessage[rawMessages.length];
                     for (int i = 0; i < rawMessages.length; i++) {
                         messages[i] = (NdefMessage) rawMessages[i];
-                        System.out.println(messages[i].getRecords()[0].toMimeType());
-                        System.out.println(messages[i].getRecords()[0].getPayload().length);
+                        String recordInStringRepresentation = new String(messages[i].getRecords()[0].getPayload());
+                        System.out.println(recordInStringRepresentation);
+                        NFCMessageDisplay.setText(recordInStringRepresentation);
                     }
                 }
             }
