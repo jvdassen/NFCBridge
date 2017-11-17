@@ -28,17 +28,23 @@ public class MainActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View view){
-                        goToBazoPaymentPage(
+                        String encodedTransaction = encodeAsBazoTransactionURI(
                                 textAmount.getText().toString(),
                                 textAddress.getText().toString(),
                                 textPOSId.getText().toString()
                                 );
+                        goToBazoPaymentPage(encodedTransaction);
+
                     }
                 }
         );
 
     }
-    public void goToBazoPaymentPage(String amount, String bazoaddress, String posid) {
+    public void goToBazoPaymentPage(String URLencodedTransaction) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URLencodedTransaction));
+        startActivity(browserIntent);
+    }
+    public String encodeAsBazoTransactionURI(String amount, String bazoaddress, String posid) {
         String baseString = "https://bazopay2.surge.sh/#/auth/user/send?";
         String result = baseString;
 
@@ -49,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
         result += "paymentinfo=" + "bazo:" + bazoaddress + "?amount=" + amount;
         System.out.println("trying to access: " + result);
         System.out.println("encoded: " + Uri.encode(result));
-
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
-        startActivity(browserIntent);
+        return result;
     }
 
 }
