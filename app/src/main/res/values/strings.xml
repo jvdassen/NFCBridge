@@ -12,4 +12,5 @@
     <string name="bazoaddress_hint">34VBN52BACO7H3IND</string>
     <string name="amount_hint">3.5</string>
     <string name="nfc_icon_description">NFC</string>
+    <string name="push_btn">Push</string>
 </resources>
