@@ -30,10 +30,7 @@
             setContentView(R.layout.activity_ndefreceived);
             NFCintent = getIntent();
 
-
             NFCMessageDisplay = (TextView) findViewById(R.id.nfc_message_display);
-
-
 
             if (getIntent() != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
                 Parcelable[] rawMessages =
