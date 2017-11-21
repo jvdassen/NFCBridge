@@ -1,8 +1,13 @@
 package ch.uzh.csg.nfcbridge;
 
-/**
- * Created by jan on 21.11.17.
- */
-
 public class TransactionDTO {
+    String bazoaddress;
+    String amount;
+    String posid;
+
+    public TransactionDTO(String bazoaddress, String amount, String posid){
+        this.bazoaddress = bazoaddress;
+        this.amount = amount;
+        this.posid = posid;
+    }
 }
