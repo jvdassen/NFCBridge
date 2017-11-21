@@ -8,7 +8,7 @@ public class BazoURIScheme {
     static Pattern basePattern = Pattern.compile("^https://bazopay2.surge.sh/#/");
     static Pattern existingBazoProtocol = Pattern.compile("bazo:");
     static Pattern bazoTransaction = Pattern.compile("paymentinfo=(.+)");
-
+    static Pattern amountPattern = Pattern.compile("/?amount=(.+)");
 
 
     public static String encodeAsBazoTransactionURI(String bazoaddress, String amount, String posid) {
@@ -33,6 +33,12 @@ public class BazoURIScheme {
         Matcher matchHostBase = basePattern.matcher(encodedBazoTransaction);
         Matcher matchExistingBazoProtocol = existingBazoProtocol.matcher(encodedBazoTransaction);
         Matcher paymentInfoGroup = bazoTransaction.matcher(encodedBazoTransaction);
+        String paymentInfo = "";
+        TransactionDTO result;
+
+        String amountFound = "";
+        String addressFound = "";
+        String posidFound = "";
 
         if (!matchHostBase.find()) {
             throw new UnsupportedOperationException("TransactionURI has a bad host: " + encodedBazoTransaction);
@@ -44,8 +50,26 @@ public class BazoURIScheme {
 
         if (foundPayment){
             System.out.println("group: " + paymentInfoGroup.group(1));
+            paymentInfo = paymentInfoGroup.group(1);
+            if (BazoURIScheme.findAmount(paymentInfo).length() > 0) {
+                System.out.println("amount: " + BazoURIScheme.findAmount(paymentInfo));
+                amountFound = BazoURIScheme.findAmount(paymentInfo);
+            } else {
+                addressFound = paymentInfo;
+            }
+        } else {
+            throw new UnsupportedOperationException("TransactionURI needs to have the Bazo keyword to indicate the protocol: " + encodedBazoTransaction);
         }
 
         return null;
+    }
+    public static String findAmount(String paymentInfo) {
+        Matcher amount = amountPattern.matcher(paymentInfo);
+        Boolean foundAmount = amount.find();
+        if (foundAmount){
+            return amount.group(1);
+        } else {
+            return "";
+        }
     }
 }
