@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         submitBtn = (Button) findViewById(R.id.submit_btn);
         pushBtn = (Button) findViewById(R.id.push_btn);
 
+        Uri data = getIntent().getData();
+        List<String> params = data.getPathSegments();
+        if (params.size() > 0) {
+            parseIntentParameters(params);
+        }
+
 
         submitBtn.setOnClickListener(
                 new View.OnClickListener(){
@@ -55,9 +61,10 @@ public class MainActivity extends AppCompatActivity {
                         );
                         Uri data = getIntent().getData();
                         List<String> params = data.getPathSegments();
-                        String first = params.get(0); // "status"
-                        System.out.println("first parameter" + first);
-                        textAddress.setText(first);
+                        if (params.size() > 0) {
+                            parseIntentParameters(params);
+                        }
+
                     }
                 }
         );
@@ -66,5 +73,22 @@ public class MainActivity extends AppCompatActivity {
     public void goToBazoPaymentPage(String URLencodedTransaction) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URLencodedTransaction));
         startActivity(browserIntent);
+    }
+    public void parseIntentParameters(List<String> parameters) {
+        System.out.println(parameters.toString());
+        String bazoAddress = parameters.get(0);
+        String amount = parameters.get(1);
+        String posid = parameters.get(2); // "status"
+
+
+        if(bazoAddress.length() > 0){
+            textAddress.setText(bazoAddress);
+        }
+        if(amount.length() > 0) {
+            textAmount.setText(amount);
+        }
+        if(posid.length() > 0) {
+            textPOSId.setText(posid);
+        }
     }
 }

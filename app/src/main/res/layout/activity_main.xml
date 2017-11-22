@@ -40,16 +40,6 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/transaction_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/amount_hint"
-                android:inputType="numberDecimal"
-                android:text="@string/amount" />
-
-            <EditText
                 android:id="@+id/transaction_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,6 +48,16 @@
                 android:hint="@string/bazoaddress_hint"
                 android:inputType="text"
                 android:text="@string/bazoaddress" />
+
+            <EditText
+                android:id="@+id/transaction_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/amount_hint"
+                android:inputType="numberDecimal"
+                android:text="@string/amount" />
 
             <EditText
                 android:id="@+id/posid"
