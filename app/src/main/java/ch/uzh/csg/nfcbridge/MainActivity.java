@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     EditText textAmount;
     EditText textAddress;
     EditText textPOSId;
-
+    TextView toBeSentDisplay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         textAmount = (EditText) findViewById(R.id.transaction_amount);
         textAddress = (EditText) findViewById(R.id.transaction_address);
         textPOSId = (EditText) findViewById(R.id.posid);
+        toBeSentDisplay = (TextView) findViewById(R.id.message_to_send);
 
         submitBtn = (Button) findViewById(R.id.submit_btn);
         pushBtn = (Button) findViewById(R.id.push_btn);
@@ -64,17 +66,9 @@ public class MainActivity extends AppCompatActivity {
                                 textAddress.getText().toString(),
                                 textPOSId.getText().toString()
                         );
-                        try {
-                            Uri data = getIntent().getData();
-
-                            List<String> params = data.getPathSegments();
-                            if (params.size() > 0) {
-                                parseIntentParameters(params);
-                            }
-                        } catch (Exception e){
-
-                        }
-
+                        NdefRecord urlRecord = new NdefRecord(encodedTransaction.getBytes());
+                        
+                        toBeSentDisplay.setText(encodedTransaction);
                     }
                 }
         );
