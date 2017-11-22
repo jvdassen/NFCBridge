@@ -31,10 +31,15 @@ public class MainActivity extends AppCompatActivity {
         submitBtn = (Button) findViewById(R.id.submit_btn);
         pushBtn = (Button) findViewById(R.id.push_btn);
 
-        Uri data = getIntent().getData();
-        List<String> params = data.getPathSegments();
-        if (params.size() > 0) {
-            parseIntentParameters(params);
+        try {
+            Uri data = getIntent().getData();
+
+            List<String> params = data.getPathSegments();
+            if (params.size() > 0) {
+                parseIntentParameters(params);
+            }
+        } catch (Exception e){
+            System.out.println(e.toString());
         }
 
 
@@ -59,10 +64,15 @@ public class MainActivity extends AppCompatActivity {
                                 textAddress.getText().toString(),
                                 textPOSId.getText().toString()
                         );
-                        Uri data = getIntent().getData();
-                        List<String> params = data.getPathSegments();
-                        if (params.size() > 0) {
-                            parseIntentParameters(params);
+                        try {
+                            Uri data = getIntent().getData();
+
+                            List<String> params = data.getPathSegments();
+                            if (params.size() > 0) {
+                                parseIntentParameters(params);
+                            }
+                        } catch (Exception e){
+
                         }
 
                     }
@@ -75,11 +85,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(browserIntent);
     }
     public void parseIntentParameters(List<String> parameters) {
-        System.out.println(parameters.toString());
-        String bazoAddress = parameters.get(0);
-        String amount = parameters.get(1);
-        String posid = parameters.get(2); // "status"
+        String bazoAddress, amount, posid;
 
+        try {
+            bazoAddress = parameters.get(0);
+        } catch (Exception e){
+            bazoAddress = "";
+        }
+
+        try {
+            amount = parameters.get(1);
+        } catch (Exception e){
+            amount = "-";
+        }
+
+        try {
+            posid = parameters.get(2);
+        } catch (Exception e){
+            posid = "-";
+        }
 
         if(bazoAddress.length() > 0){
             textAddress.setText(bazoAddress);
@@ -90,5 +114,6 @@ public class MainActivity extends AppCompatActivity {
         if(posid.length() > 0) {
             textPOSId.setText(posid);
         }
+        // pushBtn.callOnClick();
     }
 }
