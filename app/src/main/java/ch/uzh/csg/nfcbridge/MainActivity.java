@@ -105,13 +105,16 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         );
 
         NdefMessage msg = new NdefMessage(urlRecord);
-        System.out.println(msg.toString());
         return msg;
     }
     @Override
     public void onNdefPushComplete(NfcEvent event) {
-        Toast.makeText(this, "NFC message beamed successfully", Toast.LENGTH_LONG).show();
-
+        final Activity thisactivity = this;
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(thisactivity, "Transaction data beamed successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     @Override
     public void onResume() {
