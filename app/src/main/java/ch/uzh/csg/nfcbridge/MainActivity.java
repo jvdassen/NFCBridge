@@ -1,5 +1,6 @@
 package ch.uzh.csg.nfcbridge;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     EditText textAddress;
     EditText textPOSId;
     TextView toBeSentDisplay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         String encodedTransaction = BazoURIScheme.encodeAsBazoTransactionURI(
-                textAmount.getText().toString(),
                 textAddress.getText().toString(),
+                textAmount.getText().toString(),
                 textPOSId.getText().toString()
         );
         NdefRecord urlRecord = new NdefRecord(
