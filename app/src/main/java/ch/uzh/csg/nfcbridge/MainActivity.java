@@ -43,10 +43,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         textAddress = findViewById(R.id.transaction_address);
         textPOSId = findViewById(R.id.posid);
 
-        toBeSentDisplay = (TextView) findViewById(R.id.message_to_send);
-
         submitBtn = (Button) findViewById(R.id.submit_btn);
-        pushBtn = (Button) findViewById(R.id.push_btn);
         final NfcAdapter mNFCAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNFCAdapter == null) {
             Toast.makeText(this, "NFC is not available", Toast.LENGTH_LONG).show();
@@ -84,20 +81,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                     }
                 }
         );
-        pushBtn.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View view){
-                        String encodedTransaction = BazoURIScheme.encodeAsBazoTransactionURI(
-                                textAddress.getText().toString(),
-                                textAmount.getText().toString(),
-                                textPOSId.getText().toString()
-                        );
-                        //mNFCAdapter.setNdefPushMessage(createNdefMessage());
 
-                        toBeSentDisplay.setText(encodedTransaction);
-                    }
-                }
-        );
         genericTextChangedWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
