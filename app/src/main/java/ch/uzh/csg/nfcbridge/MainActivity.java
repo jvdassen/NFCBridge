@@ -1,17 +1,21 @@
 package ch.uzh.csg.nfcbridge;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.nfc.tech.Ndef;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,15 +31,18 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     EditText textAddress;
     EditText textPOSId;
     TextView toBeSentDisplay;
+    TextWatcher genericTextChangedWatcher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textAmount = (EditText) findViewById(R.id.transaction_amount);
-        textAddress = (EditText) findViewById(R.id.transaction_address);
-        textPOSId = (EditText) findViewById(R.id.posid);
+        textAmount = findViewById(R.id.transaction_amount);
+        textAddress = findViewById(R.id.transaction_address);
+        textPOSId = findViewById(R.id.posid);
+
         toBeSentDisplay = (TextView) findViewById(R.id.message_to_send);
 
         submitBtn = (Button) findViewById(R.id.submit_btn);
@@ -51,14 +58,17 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         try {
             Uri data = getIntent().getData();
-
-            List<String> params = data.getPathSegments();
-            if (params.size() > 0) {
-                parseIntentParameters(params);
+            if (data != null){
+                List<String> params = data.getPathSegments();
+                if (params.size() > 0) {
+                    parseIntentParameters(params);
+                    storeTransactionData();
+                }
             }
         } catch (Exception e){
             System.out.println(e.toString());
         }
+        parseStoredTransactionData();
 
 
         submitBtn.setOnClickListener(
@@ -88,12 +98,61 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                     }
                 }
         );
+        genericTextChangedWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                storeTransactionData();
+            }
+        };
+
+        textAddress.addTextChangedListener(genericTextChangedWatcher);
+        textAmount.addTextChangedListener(genericTextChangedWatcher);
+        textPOSId.addTextChangedListener(genericTextChangedWatcher);
+
 
     }
+
+    @SuppressLint("ResourceType")
+    private void storeTransactionData() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        String bazoaddress = textAddress.getText().toString();
+        String amount = textAmount.getText().toString();
+        String posid = textPOSId.getText().toString();
+
+        editor.putString(getString(R.string.storage_address), bazoaddress);
+        editor.putString(getString(R.string.storage_amount), amount);
+        editor.putString(getString(R.string.storage_posid), posid);
+
+        editor.commit();
+    }
+    private void parseStoredTransactionData() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+        String bazoaddress = sharedPref.getString(getString(R.string.storage_address), "000000000");
+        String amount = sharedPref.getString(getString(R.string.storage_amount), "0");
+        String posid = sharedPref.getString(getString(R.string.storage_posid), "0");
+
+        textAddress.setText(bazoaddress);
+        textAmount.setText(amount);
+        textPOSId.setText(posid);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        String encodedTransaction = BazoURIScheme.encodeAsBazoTransactionURI(
+        final String encodedTransaction = BazoURIScheme.encodeAsBazoTransactionURI(
                 textAddress.getText().toString(),
                 textAmount.getText().toString(),
                 textPOSId.getText().toString()
@@ -103,7 +162,15 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 encodedTransaction.getBytes(Charset.defaultCharset()),
                 new byte[0], new byte[0]
         );
-
+        try {
+            this.runOnUiThread(new Runnable() {
+                public void run() {
+                    toBeSentDisplay.setText(encodedTransaction);
+                }
+            });
+        } catch( Exception e ){
+            System.out.println(e.getMessage());
+        }
         NdefMessage msg = new NdefMessage(urlRecord);
         return msg;
     }
@@ -132,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         String bazoAddress, amount, posid;
         Toast.makeText(this, "We have prefilled " + parameters.size() + " parameters for you.", Toast.LENGTH_LONG).show();
 
-
         try {
             bazoAddress = parameters.get(0);
         } catch (Exception e){
@@ -142,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         try {
             amount = parameters.get(1);
         } catch (Exception e){
-            amount = "-";
+            amount = "0";
         }
 
         try {
@@ -160,6 +226,5 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         if(posid.length() > 0) {
             textPOSId.setText(posid);
         }
-        // pushBtn.callOnClick();
     }
 }
