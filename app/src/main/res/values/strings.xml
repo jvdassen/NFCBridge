@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">NFC Bridge</string>
-    <string name="description_label">Place an NFC device such as a peer or a tag at the back of the device. The following data will be sent:</string>
+    <string name="description_label">Approach an NFC device</string>
     <string name="nfc">NFC</string>
     <string name="amount">Amount</string>
     <string name="nfc_received_label">An NDEF message was read:</string>
     <string name="NFC_message" />
     <string name="bazoaddress">Bazoaddress</string>
-    <string name="openInWalletBtn">Open in Wallet</string>
+    <string name="openInWalletBtn">Show in Bazo Wallet</string>
     <string name="pos_id_label">POS ID</string>
     <string name="pos_id_hint">133</string>
     <string name="bazoaddress_hint">34VBN52BACO7H3IND</string>
