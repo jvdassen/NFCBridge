@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,29 +20,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="@android:dimen/app_icon_size"
-            android:contentDescription="@string/nfc_icon_description"
-            app:srcCompat="@drawable/ic_nfc_black_24dp" />
-
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/description_label"
-            android:textAlignment="center" />
+            android:orientation="vertical"
+            android:paddingTop="10px">
 
-        <TextView
-            android:id="@+id/message_to_send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="@android:dimen/notification_large_icon_height"
+                android:contentDescription="@string/nfc_icon_description"
+                app:srcCompat="@drawable/ic_nfc_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="0px"
+                android:paddingBottom="60dp"
+                android:paddingTop="5dp"
+                android:text="@string/description_label"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="The following transaction data will be transferred:" />
 
             <EditText
                 android:id="@+id/transaction_address"
@@ -78,23 +91,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="172dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
 
             <Button
                 android:id="@+id/submit_btn"
-                style="@style/AppTheme"
+                style="@android:style/Widget.Material.Button.Colored"
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:text="@string/openInWalletBtn" />
 
-            <Button
-                android:id="@+id/push_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/push_btn" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
