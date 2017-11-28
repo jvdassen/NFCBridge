@@ -13,4 +13,8 @@
     <string name="amount_hint">3.5</string>
     <string name="nfc_icon_description">NFC</string>
     <string name="push_btn">Push</string>
+    <string name="preference_key_file">nfc_bridge_shared_preferences</string>
+    <string name="storage_amount">storage_amount</string>
+    <string name="storage_address">storage_address</string>
+    <string name="storage_posid">storage_posid</string>
 </resources>
