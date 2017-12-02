@@ -146,15 +146,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 encodedTransaction.getBytes(Charset.defaultCharset()),
                 new byte[0], new byte[0]
         );
-        try {
-            this.runOnUiThread(new Runnable() {
-                public void run() {
-                    toBeSentDisplay.setText(encodedTransaction);
-                }
-            });
-        } catch( Exception e ){
-            System.out.println(e.getMessage());
-        }
+
         NdefMessage msg = new NdefMessage(urlRecord);
         return msg;
     }
