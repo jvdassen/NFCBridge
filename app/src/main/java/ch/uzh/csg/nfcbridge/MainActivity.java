@@ -25,14 +25,13 @@ import android.widget.Toast;
 import java.nio.charset.Charset;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback{
+public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback {
     Button submitBtn, pushBtn;
     EditText textAmount;
     EditText textAddress;
     EditText textPOSId;
     TextView toBeSentDisplay;
     TextWatcher genericTextChangedWatcher;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,17 +189,12 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         try {
             posid = parameters.get(2);
         } catch (Exception e){
-            posid = "-";
+            posid = "";
         }
 
-        if(bazoAddress.length() > 0){
-            textAddress.setText(bazoAddress);
-        }
-        if(amount.length() > 0) {
-            textAmount.setText(amount);
-        }
-        if(posid.length() > 0) {
-            textPOSId.setText(posid);
-        }
+        textAddress.setText(bazoAddress);
+        textAmount.setText(amount);
+        textPOSId.setText(posid);
+
     }
 }
