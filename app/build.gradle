@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "ch.uzh.csg.nfcbridge"
+        applicationId "ch.uzh.ifi.nfcbridge"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
