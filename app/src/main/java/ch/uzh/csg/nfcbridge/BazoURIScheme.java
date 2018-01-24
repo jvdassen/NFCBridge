@@ -5,12 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BazoURIScheme {
+    static String hostBase = "https://oysy.surge.sh/";
+
     static Pattern basePattern = Pattern.compile("^https://oysy.surge.sh/#/");
     static Pattern existingBazoProtocol = Pattern.compile("bazo:");
     static Pattern bazoTransaction = Pattern.compile("paymentinfo=(.+)");
     static Pattern amountPattern = Pattern.compile("/?amount=(.+)");
-    
-    static String hostBase = "https://oysy.surge.sh/"
 
     public static String encodeAsBazoTransactionURI(String bazoaddress, String amount, String posid) {
         String baseString = hostBase + "#/auth/user/send?";

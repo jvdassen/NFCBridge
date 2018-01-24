@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     EditText textAmount;
     EditText textAddress;
     EditText textPOSId;
-    TextView toBeSentDisplay;
     TextWatcher genericTextChangedWatcher;
 
     @Override
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         final Activity thisactivity = this;
         this.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(thisactivity, "Transaction data beamed successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(thisactivity, "Transaction data transferred successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }
