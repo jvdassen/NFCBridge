@@ -16,11 +16,10 @@ public class BazoURISchemeTest {
         amount = "3.5";
         bazoaddress = "2B4M98CAJ2ND1T54E89AS4598JD32KWU8A";
         optionalPOSID = "133";
-        allParams = "https://bazopay2.surge.sh/#/auth/user/send?posid=133&paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A?amount=3.5";
-        onlyAddressAndAmount = "https://bazopay2.surge.sh/#/auth/user/send?paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A?amount=3.5";
-        onlyAddress = "https://bazopay2.surge.sh/#/auth/user/send?paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A";
-        //onlyAmount = "https://bazopay2.surge.sh/#/auth/user/send?paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A?amount=3.5";
-        onlyPOSID =  "https://bazopay2.surge.sh/#/auth/user/send?posid=133";
+        allParams = "https://oysy.surge.sh/#/auth/user/send?posid=133&paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A?amount=3.5";
+        onlyAddressAndAmount = "https://oysy.surge.sh/#/auth/user/send?paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A?amount=3.5";
+        onlyAddress = "https://oysy.surge.sh/#/auth/user/send?paymentinfo=bazo:2B4M98CAJ2ND1T54E89AS4598JD32KWU8A";
+        onlyPOSID =  "https://oysy.surge.sh/#/auth/user/send?posid=133";
     }
     @Test
     public void completeEcodingTest() {
